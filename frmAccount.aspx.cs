@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 
-namespace patternPrediction.Admin
+namespace patternPrediction.VDoctor
 {
     public partial class frmAccount : System.Web.UI.Page
     {
@@ -14,7 +14,7 @@ namespace patternPrediction.Admin
         {
             try
             {
-                if (Session["AdminId"] == null)
+                if (Session["ICId"] == null)
                 {
                     Session.Abandon();
                     Response.Redirect("~/Visitor/frmLogin.aspx");
@@ -32,7 +32,6 @@ namespace patternPrediction.Admin
             }
         }
 
-
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             try
@@ -41,18 +40,18 @@ namespace patternPrediction.Admin
                 Class1 obj = new Class1();
                 tab.Rows.Clear();
 
-                tab = obj.GetAdminById(Session["AdminId"].ToString());
+                tab = obj.GetICById(Session["ICId"].ToString());
                 string oldPassword = tab.Rows[0]["Password"].ToString();
 
                 if (txtOldPassword.Text.Equals(oldPassword))
                 {
-                    obj.UpdateAdminPassword(txtNewPassword.Text, Session["AdminId"].ToString());
-                    ClientScript.RegisterStartupScript(this.GetType(), "key", "<script>alert('Admin Password changed successfully')</script>");
+                    obj.UpdateICPassword(txtNewPassword.Text, Session["ICId"].ToString());
+                    ClientScript.RegisterStartupScript(this.GetType(), "key", "<script>alert('User Password changed successfully')</script>");
 
                 }
                 else
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "key", "<script>alert('Admin Old password incorrect')</script>");
+                    ClientScript.RegisterStartupScript(this.GetType(), "key", "<script>alert('User Old password incorrect')</script>");
                 }
             }
             catch
